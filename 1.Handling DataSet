@@ -7,16 +7,25 @@ var.column.unique
 __________________________________________________________
 Finding the value count for unique values
 var.column.value_counts()
+
 __________________________________________________________
 Replacing categorical variables to numeric values
 var['column'] = pd.factorize(var.column)[0]
+
+
 __________________________________________________________
 Replacing nullvalues and missing values with "0"
 var['column']=var.column.fillna(0)
 __________________________________________________________
+
+Replcaing the otliers with mean or a value
+var['column']=var['column'].mask(var['column']>30,var['column'].mean()
+
+__________________________________________________________
 Replacing nullvalues and missing values with "mean(),mode()"
 var['column']=var.column.fillna(var['column'].mean())
 var['column']=var.column.fillna(var['column'].mode())
+
 __________________________________________________________
 combining two tables
 varun=pd.concat([tab1,tab2,axis='columns'])
@@ -24,5 +33,3 @@ __________________________________________________________
 adding an another column to table
 var['columnname']=pd.Series(new column)
 __________________________________________________________
-
-
