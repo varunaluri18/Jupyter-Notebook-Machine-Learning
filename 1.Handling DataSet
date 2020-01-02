@@ -19,6 +19,14 @@ var.loc[var.Sex=='male','Name']
 ```````````````````````````````````````````
 Deleting a column from datset as 
 varun.drop(['colname'],axis=1,inplace=True)
+__________________________________________________
+Handling imbalance datasset using using UNDER-SAMPLING
+b = var[var['diagnosis']=='B']
+m = var[var['diagnosis']=='M']
+
+from imblearn.under_sampling import NearMiss
+nm = NearMiss(random_state=42)
+X_res,y_res = nm.fit_sample(X,y)
 ____________________________________________
 Finding null values in dataset
 var.isnull().sum()
@@ -33,7 +41,9 @@ var.column.value_counts()
 __________________________________________________________
 Replacing categorical variables to numeric values
 var['column'] = pd.factorize(var.column)[0]
-
+__________________________________________________________
+Replacing combination of str and num as 
+varun['Months'] = varun['Months'].replace(['GT6'],[6])
 
 __________________________________________________________
 Replacing nullvalues and missing values with "0"
@@ -59,4 +69,50 @@ Replacing the null values in CATEGORICAL column
 var['categorical_column'] = var['categorical_column'].fillna(var['categorical_column'].mode()[0])
 
 sns.heatmap(df.isnull(),yticklabels=False,cbar=False,cmap='coolwarm')
+___________________________________________________________
+
+
+cross-validation technique
+from sklearn.model_selection import cross_val_score
+print(cross_val_score(dtree,X,y,cv=5))
+____________________________________________
+ERROR
+
+print('MAE:', metrics.mean_absolute_error(y_test, predictions))
+print('MSE:', metrics.mean_squared_error(y_test, predictions))
+print('RMSE:', np.sqrt(metrics.mean_squared_error(y_test, predictions)))
+____________________________________________________
+saving the model
+
+#Pickling
+import pickle
+with open ('nb_pickle','wb') as f:
+    pickle.dump(nb,f)    
+with open('nb_pickle','rb') as f:
+    mp = pickle.load(f)
+mp.predict(y_pred)
+
+#joblib
+from sklearn.externals import joblib
+joblib.dump(nb, 'nb_joblib')
+mj=joblib.load('nb_joblib')
+mj.predict(y_pred)
+________________________________________________
+Under sampling and Over Sampling
+# Over Sampling
+from imblearn.over_sampling import RandomOverSampler
+os = RandomOverSampler(ratio=1)
+X1,Y1 = os.fit_sample(X,Y)
+
+
+# Over Sampling
+from imblearn.combine import SMOTETomek
+smk= SMOTETomek(random_state=42)
+X1,Y1 = smk.fit_sample(X,y)
+
+
+# Under Sampling
+from imblearn.under_sampling import NearMiss
+us = NearMiss(random_state=42)
+X1,Y1 = us.fit_sample(X,Y)
 ___________________________________________________________
